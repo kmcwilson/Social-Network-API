@@ -1,6 +1,6 @@
 const express = require('express');
 const db = require('./config/connection');
-const routes = require('./routes');
+const routes = require('./routes/api');
 
 // const activity = cwd.includes('01-Activities')
 //   ? cwd.split('/01-Activities/')[1]
