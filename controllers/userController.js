@@ -1,6 +1,6 @@
 const { User, Thought } = require('../models');
 
-module.exports = {
+ const userController = {
     //GET all users
     getUsers(req, res) {
         User.find()
@@ -29,7 +29,7 @@ module.exports = {
     },
 
     updateUser(req, res) {
-        User.fineOneAndUpdate(
+        User.findOneAndUpdate(
             { _id: req.params.userId },
             { $set: req.body },
             { runValidators: true, new: true }
@@ -85,3 +85,5 @@ module.exports = {
         .catch((err)=> res.status(500).json(err));
     },
 };
+
+module.exports= userController;

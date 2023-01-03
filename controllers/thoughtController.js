@@ -22,17 +22,17 @@ module.exports = {
     //Create a new thought using id
     createThought(req, res) {
         Thought.create(req.body)
-            .then(({ _id }) => {
+            .then(({_id}) => {
                 return User.findOneAndUpdate(
                     { _id: req.body.userId },
-                    { $addToSet: { thoughts: thought._id } },
+                    { $push: { thoughts: _id } },
                     { new: true }
                 );
             })
-            .then((user) =>
-                !user
+            .then((thought) =>
+                !thought
                     ? res.status(404).json({ message: "Thought created, but found not user with that Id!" })
-                    : res.json(user)
+                    : res.json(thought)
             )
             .catch((err) => {
                 console.log(err);
@@ -59,7 +59,7 @@ module.exports = {
 
     //DELETE a thought using the id
     deleteThought(req, res) {
-        Thought.findOneAndRemove({ _id: req.params.thoughtId })
+        Thought.findOneAndDelete({ _id: req.params.thoughtId })
             .then((thought) =>
                 !thought
                     ? res.status(404).json({ message: "No thought with this ID!" })
@@ -72,7 +72,7 @@ module.exports = {
             .then((user) =>
                 !user
                     ? res.status(404).json({
-                        message: "Thought deleted but no uder with this id!",
+                        message: "Thought deleted but no user with this id!",
                     })
                     : res.json({ message: "Thought successfully deleted!" })
             )
